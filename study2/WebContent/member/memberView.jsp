@@ -1,4 +1,8 @@
 
+<%@page import="com.study.exception.BizNotEffectedException"%>
+<%@page import="com.study.exception.BizNotFoundException"%>
+<%@page import="com.study.member.service.MemberServiceImpl"%>
+<%@page import="com.study.member.service.IMemberService"%>
 <%@page import="com.study.member.vo.MemberVO"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.SQLException"%>
@@ -13,63 +17,36 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+<link rel="shortcut icon" href="#">
 <%@ include file="/WEB-INF/inc/header.jsp"%>
 </head>
 <body>
 	<%@include file="/WEB-INF/inc/top.jsp"%>
 <%
 	String memId= request.getParameter("memId");
-	Connection conn= null;
-	PreparedStatement pstmt= null;
-	ResultSet rs= null;
-	try{		
-		conn= DriverManager.getConnection("jdbc:apache:commons:dbcp:study");
-		StringBuffer sb= new StringBuffer();
-		sb.append(" SELECT					");
-		sb.append(" *						");
-		sb.append(" FROM					");
-		sb.append("     member				");
-		sb.append(" WHERE 1=1	 			");
-		sb.append(" AND   mem_id= ?	        ");
-		pstmt = conn.prepareStatement(sb.toString());
-		int idx = 1;
-		pstmt.setString(idx++, memId);
-		rs = pstmt.executeQuery(); 
-		if(rs.next()){
-			MemberVO memberL= new MemberVO();
-			memberL.setMemId(rs.getString("mem_id"));
-			memberL.setMemPass(rs.getString("mem_pass"));
-			memberL.setMemName(rs.getString("mem_name"));
-			memberL.setMemBir(rs.getString("mem_bir"));
-			memberL.setMemZip(rs.getString("mem_zip"));
-			memberL.setMemAdd1(rs.getString("mem_add1"));
-			memberL.setMemAdd2(rs.getString("mem_add2"));
-			memberL.setMemHp(rs.getString("mem_hp"));
-			memberL.setMemMail(rs.getString("mem_mail"));
-			memberL.setMemJob(rs.getString("mem_job"));
-			memberL.setMemHobby(rs.getString("mem_hobby"));
-			memberL.setMemMileage(rs.getInt("mem_mileage"));
-			memberL.setMemDelYn(rs.getString("mem_del_yn"));
-			
-			request.setAttribute("memberL", memberL);
-		}
-	}catch(SQLException e){
-		e.printStackTrace();
-	}finally{
-		if(rs!=null)  { try{rs.close();   }catch(Exception e){}}
-		if(pstmt!=null)  { try{pstmt.close();   }catch(Exception e){}}
-		if(conn!=null){ try{conn.close(); }catch(Exception e){}}
+	IMemberService memberService= new MemberServiceImpl();
+	
+	try{
+		MemberVO memberL= memberService.getMember(memId);
+		request.setAttribute("memberL", memberL);		
+	}catch(BizNotFoundException bne){
+		request.setAttribute("bne", bne);
 	}
 	
 %>
 
-
+	<c:if test="${bne ne null }">
 		<div class="alert alert-warning">해당 멤버를 찾을 수 없습니다</div>
+	</c:if>	
+		
+		
+	<c:if test="${bne eq null }">	
+		
 		<a href="memberList.jsp" class="btn btn-default btn-sm"> <span class="glyphicon glyphicon-list" aria-hidden="true"></span> &nbsp;목록
 		</a>
 
 
-
+	
 		<div class="container">
 			<h3>상세보기</h3>
 			<table class="table table-striped table-bordered">
@@ -129,6 +106,6 @@
 			</table>
 		</div>
 
-
+	</c:if>
 </body>
 </html>

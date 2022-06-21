@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+<!-- <link rel="shortcut icon" href="#"> -->
 	<%@ include file="/WEB-INF/inc/header.jsp" %>
 </head>
 <body>
@@ -90,10 +91,12 @@
 			</tr>			
 			<tr>
 				<td colspan="2">
-					<button type="submit" class="btn btn-primary">
-					<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-					&nbsp;회원가입
-					</button>
+					 <button type="submit" class="btn btn-sm btn-primary" > 
+                <span class="glyphicon glyphicon-save" aria-hidden="true"></span>
+                &nbsp;&nbsp;저장
+              </button>
+					
+					
 					<a href="memberList.jsp" class="btn btn-info btn-sm">
 					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
 					&nbsp;목록

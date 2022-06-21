@@ -1,5 +1,9 @@
 
 
+<%@page import="com.study.exception.BizNotEffectedException"%>
+<%@page import="com.study.exception.BizNotFoundException"%>
+<%@page import="com.study.member.service.IMemberService"%>
+<%@page import="com.study.member.service.MemberServiceImpl"%>
 <%@page import="com.study.member.vo.MemberVO"%>
 
 <%@page import="java.sql.PreparedStatement"%>
@@ -17,6 +21,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+<link rel="shortcut icon" href="#">
 <%@ include file="/WEB-INF/inc/header.jsp"%>
 </head>
 <body>
@@ -24,60 +29,39 @@
 <jsp:useBean id="memberL" class="com.study.member.vo.MemberVO"></jsp:useBean>
 <jsp:setProperty property="*" name="memberL"/>
 <%
-	Connection conn = null;
-	PreparedStatement pstmt = null;
-	ResultSet rs = null;
+
+	IMemberService memberService= new MemberServiceImpl();
 	try{
-		conn=DriverManager.getConnection("jdbc:apache:commons:dbcp:study");
-		StringBuffer sb = new StringBuffer();
-		
-		sb.append(" UPDATE member 					");
-		sb.append(" SET 							");
-		sb.append("		 mem_del_yn = 'Y'			");
-		sb.append(" WHERE 1=1						");
-		sb.append(" AND mem_id = ?					");
-		pstmt = conn.prepareStatement(sb.toString());
-		int idx = 1;
-		
-		pstmt.setString(idx++, memberL.getMemId());
-		
-		int cnt = pstmt.executeUpdate(); 
-		
-	}catch (SQLException e){
-		e.printStackTrace();
-	}finally{
-		if(rs !=null) {try{ rs.close();}catch(Exception e){}}
-		if(pstmt !=null) {try{ pstmt.close();}catch(Exception e){}}
-		if(conn !=null) {try{ conn.close();}catch(Exception e){}}
+		memberService.removeMember(memberL);
+	}catch(BizNotFoundException bnf){
+		request.setAttribute("bnf", bnf);
+	}catch(BizNotEffectedException bne){
+		request.setAttribute("bne", bne);
 	}
+
 %>
-
-
 
 	<div class="container">
 		<h3>회원삭제</h3>
 
-		
+		<c:if test="${bnf eq null and bne eq null }">
 			<div class="alert alert-warning">
 				<h4>삭제 성공</h4>
 				정상적으로 회원을 삭제했습니다.
 			</div>
-		
-
-
-
-		
+		</c:if>
+		<c:if test="${bnf ne null }">
 			<div class="alert alert-warning">
 				<h4>회원이 존재하지 않습니다.</h4>
 				올바르게 접근해주세요.
 			</div>
-	
-		
+		</c:if>
+		<c:if test="${bne ne null }">
 		<div class="alert alert-warning">
 			<h4>삭제에 실패했습니다.</h4>
 			삭제 실패
 		</div>
-		
+		</c:if>
 		<a href="memberList.jsp?" class="btn btn-default btn-sm"> <span class="glyphicon glyphicon-list" aria-hidden="true"></span> &nbsp;목록
 		</a>
 	</div>
