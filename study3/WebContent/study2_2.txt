@@ -1,0 +1,14 @@
+study  에서는 계측화 적용
+study2 에서는 Code 적용 
+JB01  학생
+
+
+DB member테이블에서 JB01 대신에 학생으로 저장하면 됐을텐데... 왜 굳이 그랬을까? 
+한글로 하면 데이터가 어떤건지 헷갈림 중복도 생김
+
+
+코드 적용하기 
+- form, edit : comm_code 테이블 조회한 다음 c:forEach
+- list, view : comm_code 테이블 조회x, free_board 조회하면서 join
+- vo에 memJobNm, memHobbyNm 추가 join도 두번
+
