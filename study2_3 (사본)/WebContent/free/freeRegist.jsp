@@ -17,7 +17,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="shortcut icon" href="#">
 <meta charset="UTF-8">
 <%@include file="/WEB-INF/inc/header.jsp"%>
 <title>Insert title here</title>

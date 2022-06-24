@@ -14,7 +14,6 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<link rel="shortcut icon" href="#">
 <%@ include file="/WEB-INF/inc/header.jsp"%>
 <title>자유게시판 - 글 보기</title>
 </head>

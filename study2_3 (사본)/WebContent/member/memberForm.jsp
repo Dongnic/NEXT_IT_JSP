@@ -7,7 +7,6 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<!-- <link rel="shortcut icon" href="#"> -->
 	<%@ include file="/WEB-INF/inc/header.jsp" %>
 </head>
 <body>
