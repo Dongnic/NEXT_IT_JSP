@@ -18,6 +18,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+<link rel="shortcut icon" href="../resources/images/favicon.ico">
 <%request.setCharacterEncoding("utf-8"); %>
 <%@include file="/WEB-INF/inc/header.jsp" %>
 </head>
@@ -157,7 +158,7 @@
 		</tr>
 	</thead>	
 	<tbody>
-		<c:forEach items="${freeBoardList }" var="freeBoard">
+		<c:forEach items="${freeBoardList }" var="freeBoard" varStatus="status">
 			<tr class="text-center">
 				<td>${freeBoard.boNo }</td>
 				<td>${freeBoard.boCategoryNm }</td>
@@ -234,7 +235,7 @@
 	//submit
 	$form.find("button[type=submit]").click(function(e) {
 		e.preventDefault();
-		$curPage.val("1");
+		$curPage.val(1);
 		$form.submit();
 	});
 	
@@ -252,9 +253,10 @@
 	}); // '#id_rowSizePerPage'.change
 	// 초기화 버튼 클릭
 	$('#id_btn_reset').click(function() {
+		$curPage.val(1);
 		$("input[name='searchWord']").val("");
-		$("input[name='searchCategory'] option:selected").prop("selected", false);
-		$("input[name='searchType'] option:selected").prop("selected", false);
+		$("#id_searchCategory").val("");
+		$("#id_searchType").val("");
 		$form.submit();
 	}); // #id_btn_reset.click
 

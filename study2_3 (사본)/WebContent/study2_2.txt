@@ -12,3 +12,14 @@ DB member테이블에서 JB01 대신에 학생으로 저장하면 됐을텐데..
 - list, view : comm_code 테이블 조회x, free_board 조회하면서 join
 - vo에 memJobNm, memHobbyNm 추가 join도 두번
 
+1. MemberSearchVO extends PagingVO 만들기
+	필드이름은 ? 검색의 name 잘 보면
+2. MemberSearchVO 변수이름은 항상 'searchVO'로
+
+3. MemberService의 getMemberList() -> getMemberList(MemberSearchVO memberSearchVO)
+
+4. MemberDao에 getTotalRowCount(MemberSearchVO memberSearchVO) 만들기
+
+5. MemberDao의  getMemberList() -> getMemberList(MemberSearchVO memberSearchVO)
+
+나머지 free 보고 똑같이 구현

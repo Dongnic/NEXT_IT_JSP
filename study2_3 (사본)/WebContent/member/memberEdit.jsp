@@ -68,19 +68,19 @@
 					</tr>
 					<tr>
 						<th>우편번호</th>
-						<td><input type="text" name="memZip" class="form-control input-sm" value='${memberL.memZip }'></td>
+						<td><input type="text" name="memZip" class="form-control input-sm" required="required" value='${memberL.memZip }'></td>
 					</tr>
 					<tr>
 						<th>주소</th>
-						<td><input type="text" name="memAdd1" class="form-control input-sm" value='${memberL.memAdd1 }'>
-							<input type="text" name="memAdd2" class="form-control input-sm" value='${memberL.memAdd2 }'>
+						<td><input type="text" name="memAdd1" class="form-control input-sm" required="required" value='${memberL.memAdd1 }'>
+							<input type="text" name="memAdd2" class="form-control input-sm" required="required" value='${memberL.memAdd2 }'>
 						</td>
 					</tr>
 					<tr>
 						<th>생일</th>
 						<fmt:parseDate value="${memberL.memBir }" pattern="yyyy-MM-dd" var="date_date"/>
 						<fmt:formatDate value="${date_date}" pattern="yyyy-MM-dd" var="str_date"/>
-						<td><input type="date" name="memBir" class="form-control input-sm" value='${str_date }'></td>
+						<td><input type="date" name="memBir" class="form-control input-sm" required="required" value='${str_date }'></td>
 					</tr>
 					<tr>
 						<th>메일</th>
@@ -88,13 +88,13 @@
 					</tr>
 					<tr>
 						<th>핸드폰</th>
-						<td><input type="tel" name="memHp" class="form-control input-sm" value='${memberL.memHp }'></td>
+						<td><input type="tel" name="memHp" class="form-control input-sm" required="required" value='${memberL.memHp }'></td>
 					</tr>
 					<tr>
 						<th>직업</th>
 						<td>
 						
-							<select name="memJob" class="form-control input-sm" >
+							<select name="memJob" class="form-control input-sm" required="required">
 								<option value="">-- 직업 선택 --</option>
 								
 								<c:forEach items="${jobList }" var="job">
@@ -117,7 +117,7 @@
 						<th>취미</th>
 						<td>
 						
-							<select name="memHobby" class="form-control input-sm" >
+							<select name="memHobby" class="form-control input-sm" required="required" >
 								<option value="">-- 취미 선택 --</option>
 								
 								<c:forEach items="${hobbyList }" var="hobby">
