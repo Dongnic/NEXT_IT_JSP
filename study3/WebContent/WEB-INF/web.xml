@@ -1,13 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" version="3.1">
-  <display-name>study2</display-name>
+  <display-name>study</display-name>
  
   <servlet> <servlet-name>DriverLoader</servlet-name>
 	  <servlet-class>com.study.servlet.DriverLoader</servlet-class>
 	  <load-on-startup>1</load-on-startup>
  </servlet>
+<!--   <servlet>  -->
+<!-- 	  <servlet-name>freeList</servlet-name> -->
+<!-- 	  <servlet-class>com.study.servlet.A00SimpleFreeListController</servlet-class> -->
+<!--  </servlet> -->
+<!--   <servlet-mapping>  -->
+<!-- 	  <servlet-name>freeList</servlet-name> -->
+<!-- 	  <url-pattern>/free/freeList.wow</url-pattern> -->
+<!--  </servlet-mapping> -->
+<!--   <servlet>  -->
+<!-- 	  <servlet-name>freeView</servlet-name> -->
+<!-- 	  <servlet-class>com.study.servlet.A00SimpleFreeViewController</servlet-class> -->
+<!--  </servlet> -->
+<!--   <servlet-mapping>  -->
+<!-- 	  <servlet-name>freeView</servlet-name> -->
+<!-- 	  <url-pattern>/free/freeView.wow</url-pattern> -->
+<!--  </servlet-mapping> -->
 
-
-
+	<servlet>
+		<servlet-name>appServlet</servlet-name>
+		<servlet-class>com.study.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/classes/config/uri_handlermapping.properties</param-value>
+		</init-param>
+		
+		<load-on-startup>2</load-on-startup>
+	</servlet>	
+	<servlet-mapping>
+		<servlet-name>appServlet</servlet-name>
+		<url-pattern>*.wow</url-pattern>
+	</servlet-mapping>	
+	
 
 </web-app>

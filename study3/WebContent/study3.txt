@@ -1,0 +1,22 @@
+MVC 패턴 사전지식
+
+1. servlet
+	- 요청을 자바빈으로 처리하는 자바 클래스
+	- 서버는 다 servlet(.java)로 이루어져있다.
+2. WEB-INF 폴더
+	- 브라우저에서 직접접근
+	- 서버내에서만 접근 가능(forward)
+	
+==> 만일 'wow를 요청했을 때 어떤 서블릿이 실행되죠..
+	freeList.wow
+	freeView.wow
+	freeEdit.wow
+	
+	공통적으로 필요한 내용을 하나의 서블렛에서 작성하고
+	List, View, Edit으로 포워딩하면 됨
+	
+	1. RequestMappingHandlerMapping, DispatcherServlet, ViewResolver com.study.servlet에 복사
+	2. Handler interface 만들기
+		public String process
+	3. com.study.free.web 패키지 만들고 Free** 복사
+	4. config폴터채로 java src앞에 복사
