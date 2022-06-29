@@ -29,26 +29,14 @@
 </head>
 <body>
 <%@include file="/WEB-INF/inc/top.jsp"%>
-<jsp:useBean id="searchVO" class="com.study.member.vo.MemberSearchVO"></jsp:useBean>
-<jsp:setProperty property="*" name="searchVO"/>
-<%
-	IMemberService memberService= new MemberServiceImpl();
-	List<MemberVO> memberList= memberService.getMemberList(searchVO);
-	request.setAttribute("memberList", memberList);
-	
-	ICommCodeService codeService=new CommCodeServiceImpl();
-	List<CodeVO> hobbyList= codeService.getCodeListByParent("HB00");
-	request.setAttribute("hobbyList", hobbyList);
-	List<CodeVO> jobList= codeService.getCodeListByParent("JB00");
-	request.setAttribute("jobList", jobList);
-%>
+
 후 : ${searchVO }
  <div class="container">	
 	<h3>회원목록</h3>	
 	<!-- START : 검색 폼  -->
 	<div class="panel panel-default collapse in" id="id_search_area">
 		<div class="panel-body">
-			<form name="search" action="memberList.jsp" method="post" class="form-horizontal">
+			<form name="search" action="memberList.wow" method="post" class="form-horizontal">
 				<input type="hidden" name="curPage" value="${searchVO.curPage }"> <input type="hidden" name="rowSizePerPage" value="${searchVO.rowSizePerPage }">
 				<div class="form-group">
 					<label for="id_searchType" class="col-sm-2 control-label">검색</label>
@@ -112,7 +100,7 @@
 	</div>
 <!-- END : 목록건수 및 새글쓰기 버튼  -->
 	<div>
-		<a href="memberForm.jsp" class="btn btn-primary btn-sm pull-right">회원 등록</a>
+		<a href="memberForm.wow" class="btn btn-primary btn-sm pull-right">회원 등록</a>
 	</div>
 	<table class="table table-striped table-bordered">
 	<caption class="hidden">회원목록 조회</caption>
@@ -139,7 +127,7 @@
 		<c:forEach items="${memberList }" var="list" varStatus="status">
 			<tr class="t">
 				<td>${list.memId }</td>
-				<td><a href="memberView.jsp?memId=${list.memId }">${list.memName }</a></td>
+				<td><a href="memberView.wow?memId=${list.memId }">${list.memName }</a></td>
 				<td>${list.memHp }</td>
 				<td>${list.memBir }</td>
 				<td>${list.memJobNm }</td>
@@ -154,31 +142,31 @@
 			<ul class="pagination">
 
 			<!-- 첫 페이지  -->
-			<li><a href="memberList.jsp?curPage=1" data-page="1"><span aria-hidden="true">&laquo;</span></a></li>
+			<li><a href="memberList.wow?curPage=1" data-page="1"><span aria-hidden="true">&laquo;</span></a></li>
 
 
 			<!-- 이전 페이지 -->
 			<c:if test="${searchVO.curPage>=2 }">
-				<li><a href="memberList.jsp?curPage=${searchVO.curPage-1 }" data-page="${searchVO.curPage-1 }"><span aria-hidden="true">&lt;</span></a></li>
+				<li><a href="memberList.wow?curPage=${searchVO.curPage-1 }" data-page="${searchVO.curPage-1 }"><span aria-hidden="true">&lt;</span></a></li>
 			</c:if>
 
 			<!-- 페이지 넘버링  -->
 			<c:forEach begin="${searchVO.firstPage }" end="${searchVO.lastPage }" var="i">
 			<c:if test="${searchVO.curPage!=i }">
-			<li><a href="memberList.jsp?curPage=${i }" data-page="${i }">${i }</a></li>
+			<li><a href="memberList.wow?curPage=${i }" data-page="${i }">${i }</a></li>
 			</c:if>
 			<c:if test="${i==searchVO.curPage }">
-			<li class="active"><a href="memberList.jsp">${i }</a></li>
+			<li class="active"><a href="memberList.wow">${i }</a></li>
 			</c:if>
 			</c:forEach>
 
 			<!-- 다음  페이지  -->
 			<c:if test="${searchVO.curPage<=searchVO.totalPageCount-1 }">
-				<li><a href="memberList.jsp?curPage=${searchVO.curPage+1 }" data-page="${searchVO.curPage+1 }"><span aria-hidden="true">&gt;</span></a></li>
+				<li><a href="memberList.wow?curPage=${searchVO.curPage+1 }" data-page="${searchVO.curPage+1 }"><span aria-hidden="true">&gt;</span></a></li>
 			</c:if>
 
 			<!-- 마지막 페이지 -->
-			<li><a href="memberList.jsp?curPage=${searchVO.totalPageCount }" data-page="${searchVO.totalPageCount }"><span aria-hidden="true">&raquo;</span></a></li>
+			<li><a href="memberList.wow?curPage=${searchVO.totalPageCount }" data-page="${searchVO.totalPageCount }"><span aria-hidden="true">&raquo;</span></a></li>
 		</ul>
 		</nav>
 		<!-- END : 페이지네이션  -->

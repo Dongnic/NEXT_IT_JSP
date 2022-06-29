@@ -11,16 +11,9 @@
 </head>
 <body>
 <%@include file="/WEB-INF/inc/top.jsp"%>
-<%
-	ICommCodeService ccs= new CommCodeServiceImpl();
-	List<CodeVO> jobList= ccs.getCodeListByParent("JB00");
-	request.setAttribute("jobList", jobList);
-	List<CodeVO> hobbyList= ccs.getCodeListByParent("HB00");
-	request.setAttribute("hobbyList", hobbyList);
-%>
  <div class="container">	
 	<h3>회원가입</h3>		
-	<form action="memberRegist.jsp" method="post" >
+	<form action="memberRegist.wow" method="post" >
 	<table class="table table-striped table-bordered">
 		<tbody>
 			<tr>
@@ -117,7 +110,7 @@
               </button>
 					
 					
-					<a href="memberList.jsp" class="btn btn-info btn-sm">
+					<a href="memberList.wow" class="btn btn-info btn-sm">
 					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
 					&nbsp;목록
 					</a>

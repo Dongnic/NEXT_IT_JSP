@@ -18,38 +18,17 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+<link rel="shortcut icon" href="../resources/images/favicon.ico">
 	<%@ include file="/WEB-INF/inc/header.jsp" %>
 </head>
 <body>
 <%@include file="/WEB-INF/inc/top.jsp"%>
-<%
-	String memId= request.getParameter("memId");
-	IMemberService memberService= new MemberServiceImpl();
-	
-	try{
-		MemberVO memberL= memberService.getMember(memId);
-		request.setAttribute("memberL", memberL);		
-	}catch(BizNotFoundException bne){
-		request.setAttribute("bne", bne);
-	}
-	ICommCodeService ccs= new CommCodeServiceImpl();
-	List<CodeVO> jobList= ccs.getCodeListByParent("JB00");
-	request.setAttribute("jobList", jobList);
-	List<CodeVO> hobbyList= ccs.getCodeListByParent("HB00");
-	request.setAttribute("hobbyList", hobbyList);
-%>
 
 
-	<c:if test="${bne ne null }">
-		<div class="alert alert-warning">해당 멤버를 찾을 수 없습니다</div>
-		<a href="memberList.jsp" class="btn btn-default btn-sm"> <span class="glyphicon glyphicon-list" aria-hidden="true"></span> &nbsp;목록
-		</a>
-	</c:if>
 
-	<c:if test="${bne eq null }">	
 		 <div class="container">	
 			<h3>회원 정보 수정</h3>	
-			<form action="memberModify.jsp" method="post" >
+			<form action="memberModify.wow" method="post" >
 			<table class="table table-striped table-bordered">
 				<tbody>
 					<tr>
@@ -151,7 +130,7 @@
 					</tr>	
 					<tr>
 						<td colspan="2">
-							<a href="memberList.jsp" class="btn btn-info btn-sm">
+							<a href="memberList.wow" class="btn btn-info btn-sm">
 							<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
 							&nbsp;목록으로
 							</a>
@@ -160,7 +139,7 @@
 							&nbsp;&nbsp; 저장
 							</button>
 							
-								<button type="submit" formaction="memberDelete.jsp" class="btn btn-danger btn-sm">
+								<button type="submit" formaction="memberDelete.wow" class="btn btn-danger btn-sm">
 							<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
 							&nbsp;&nbsp; 삭제
 							</button>
@@ -172,7 +151,7 @@
 			</table>
 			</form>
 		</div>
-	</c:if>
+
 
 </body>
 </html>

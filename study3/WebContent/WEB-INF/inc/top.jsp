@@ -2,7 +2,7 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!-- Fixed navbar -->
     <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container">
@@ -18,15 +18,15 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li class="active"><a href="#">Home</a></li>
-            <li><a href="#about">About</a></li>
+            <li><a href="<%=request.getContextPath()%>/about/aboutHome.wow">About</a></li>
             <li><a href="#contact">Contact</a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">게시판 <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="freeList.jsp">자유게시판</a></li>
+                <li><a href="${pageContext.request.contextPath }/free/freeList.wow">자유게시판</a></li>
                 <li><a href="#">자료실</a></li>
                 <li><a href="#">공지사항</a></li>
-                 <li><a href="../member/memberList.jsp">회원목록</a></li>
+                 <li><a href="${pageContext.request.contextPath }/member/memberList.wow">회원목록</a></li>
                 <li class="divider"></li>
                 <li class="dropdown-header">Nav header</li>
                 <li><a href="#">Separated link</a></li>
@@ -36,14 +36,17 @@
           </ul>
           <ul class="nav navbar-nav navbar-right">
          
-           <li><a href="#">로그인</a></li>
-            <li><a href="#">회원가입</a></li> 
+         <c:if test="${USER_INFO eq null }">
+           <li><a href="<%=request.getContextPath() %>/login/login.wow">로그인</a></li>
+            <li><a href="<%=request.getContextPath() %>/join/step1.wow">회원가입</a></li> 
+         </c:if>
          
             
+         <c:if test="${USER_INFO ne null }">
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><%-- <%=user.getUserName()%> --%>님 <span class="caret"></span></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><%-- <%=user.getUserName()%> --%>${USER_INFO.userName }님 <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="#">
+                <li><a href="<%=request.getContextPath() %>/mypage/info.wow">
 	                <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
 	                &nbsp;&nbsp;My page
 	                </a></li>
@@ -56,12 +59,13 @@
                 	&nbsp;&nbsp;1:1 문의게시판
                 	</a></li>
                 <li class="divider"></li>
-                <li><a href="#">
+                <li><a href="<%=request.getContextPath() %>/login/logout.wow">
                 	<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                 	&nbsp;&nbsp;로그아웃
                 	</a></li>
               </ul>
             </li>
+         </c:if>
          
          
          

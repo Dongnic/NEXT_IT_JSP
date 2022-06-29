@@ -21,31 +21,11 @@
 </head>
 <body>
 	<%@include file="/WEB-INF/inc/top.jsp"%>
-<%
-	String memId= request.getParameter("memId");
-	IMemberService memberService= new MemberServiceImpl();
-	
-	try{
-		MemberVO memberL= memberService.getMember(memId);
-		request.setAttribute("memberL", memberL);		
-	}catch(BizNotFoundException bne){
-		request.setAttribute("bne", bne);
-	}
-	
-%>
 
-	<c:if test="${bne ne null }">
-		<div class="alert alert-warning">해당 멤버를 찾을 수 없습니다</div>
-	</c:if>	
 		
-		
-	<c:if test="${bne eq null }">	
-		
-		<a href="memberList.jsp" class="btn btn-default btn-sm"> <span class="glyphicon glyphicon-list" aria-hidden="true"></span> &nbsp;목록
+		<a href="memberList.wow" class="btn btn-default btn-sm"> <span class="glyphicon glyphicon-list" aria-hidden="true"></span> &nbsp;목록
 		</a>
 
-
-	
 		<div class="container">
 			<h3>상세보기</h3>
 			<table class="table table-striped table-bordered">
@@ -97,14 +77,13 @@
 						<td>${memberL.memDelYn }</td>
 					</tr>
 					<tr>
-						<td colspan="2"><a href="memberList.jsp" class="btn btn-default btn-sm"> <span class="glyphicon glyphicon-list" aria-hidden="true"></span> &nbsp;목록
-						</a> <a href='memberEdit.jsp?memId=${memberL.memId }' class="btn btn-info btn-sm"> <span class="glyphicon glyphicon-king" aria-hidden="true"></span> &nbsp;수정
+						<td colspan="2"><a href="memberList.wow" class="btn btn-default btn-sm"> <span class="glyphicon glyphicon-list" aria-hidden="true"></span> &nbsp;목록
+						</a> <a href='memberEdit.wow?memId=${memberL.memId }' class="btn btn-info btn-sm"> <span class="glyphicon glyphicon-king" aria-hidden="true"></span> &nbsp;수정
 						</a></td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
 
-	</c:if>
 </body>
 </html>
