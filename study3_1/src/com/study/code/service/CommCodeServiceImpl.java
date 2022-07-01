@@ -11,16 +11,14 @@ import com.study.common.util.MybatisSqlSessionFactory;
 
 
 public class CommCodeServiceImpl implements ICommCodeService {
-	
-	SqlSessionFactory sqlSessionFactory= MybatisSqlSessionFactory.getSqlSessionFactory();
+	SqlSessionFactory sqlSessionFactory = MybatisSqlSessionFactory.getSqlSessionFactory();
 	@Override
 	public List<CodeVO> getCodeListByParent(String parentCode) {
-															// true는 자동커밋 false는 수동
-		try(SqlSession session= sqlSessionFactory.openSession(true)) {
-			ICommCodeDao codeDao=session.getMapper(ICommCodeDao.class);
+		try(SqlSession session = sqlSessionFactory.openSession(true)){
+			//true는 자동커밋하냐 안하냐 
+			ICommCodeDao codeDao = session.getMapper(ICommCodeDao.class);
 			return codeDao.getCodeListByParent(parentCode);
 		}
-		
 	}
 	
 }

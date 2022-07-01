@@ -4,10 +4,10 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 
-
 	<settings>
 		<setting name="mapUnderscoreToCamelCase" value="true"/>
 	</settings>
+
   <environments default="development">
     <environment id="development">
       <transactionManager type="JDBC"/>
@@ -20,8 +20,9 @@
     </environment>
   </environments>
   <mappers>
-    <mapper resource="mybatis/freeBoard.xml"/>
-    <mapper resource="mybatis/code.xml"/>
-    <mapper resource="mybatis/member.xml"/>
+    <mapper resource="mybatis/mapper/freeBoard.xml"/>
+    <mapper resource="mybatis/mapper/common.xml"/>
+    <mapper resource="mybatis/mapper/member.xml"/>
+    <mapper resource="mybatis/mapper/code.xml"/>
   </mappers>
 </configuration>

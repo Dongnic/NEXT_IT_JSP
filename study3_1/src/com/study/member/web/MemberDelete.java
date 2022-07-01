@@ -10,7 +10,6 @@ import com.study.code.service.ICommCodeService;
 import com.study.common.vo.ResultMessageVO;
 import com.study.exception.BizNotEffectedException;
 import com.study.exception.BizNotFoundException;
-import com.study.member.dao.MemberDaoOracle;
 import com.study.member.service.IMemberService;
 import com.study.member.service.MemberServiceImpl;
 import com.study.member.vo.MemberVO;

@@ -8,21 +8,21 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 public class MybatisSqlSessionFactory {
-	private static SqlSessionFactory sqlSessionFactory;
+	private static SqlSessionFactory sqlSEssionFactory;
 	
-	//클래스로드 될 때 실행되는 구문
+	// 클래스로드 될 때 실행되는 구문
 	static {
-		//static은 메소드가 아니기 때문에 throws불가 
 		try {
-			String resource = "mybatis/mybatis-config.xml";
-			InputStream inputStream= Resources.getResourceAsStream(resource);
-			sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+		String resource = "mybatis/mybatis-config.xml";
+		InputStream inputStream = Resources.getResourceAsStream(resource);
+		//	1.mybatis-config.xml파일 읽음
+		sqlSEssionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+		}catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 	public static SqlSessionFactory getSqlSessionFactory() {
-		return sqlSessionFactory;
+		return sqlSEssionFactory;
 	}
+	
 }
