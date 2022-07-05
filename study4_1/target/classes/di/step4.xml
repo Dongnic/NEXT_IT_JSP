@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean class="com.di.step4.FreeBoardDaoOracle" id="freeBoardDao"></bean>
+
+	<bean class="com.di.step4.FreeBoardServiceImpl1" id="freeBoardService1" >
+		<constructor-arg ref="freeBoardDao" ></constructor-arg>
+	</bean>
+
+	<bean class="com.di.step4.FreeBoardServiceImpl2" id="freeBoardService2" >
+		<constructor-arg ref="freeBoardDao" ></constructor-arg>
+	</bean>
+
+	<bean class="com.di.step4.FreeBoardServiceImpl3" id="freeBoardService3" >
+		<constructor-arg ref="freeBoardDao" ></constructor-arg>
+	</bean>
+	
+	
+</beans>
