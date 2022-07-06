@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.study.free.dao.IFreeBoardDao">
+	
+	<sql id="search">
+		<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(searchWord)">
+			<choose>
+				<when test='searchType=="T"'> AND bo_title   LIKE '%' ||  #{searchWord}  || '%' </when>
+				<when test='searchType=="W"'> AND bo_writer  LIKE '%' ||  #{searchWord}  || '%' </when>
+				<when test='searchType=="C"'> AND bo_content LIKE '%' ||  #{searchWord}  || '%' </when>
+			</choose>	
+		</if>
+		
+		<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(searchCategory)">
+				AND bo_category =#{searchCategory} 
+		</if>
+	</sql>
+	
+	<select id="getTotalRowCount" resultType="int" parameterType="com.study.free.vo.FreeBoardSearchVO">
+		SELECT count(*)
+		FROM free_board
+		WHERE bo_del_yn = 'N'
+		
+		<!-- 
+		1. test="" 안에서 searchType만 쓰면 searchVO의 searchType이 됨 (#{searchType} 필요 x)
+		2. 정적메소드 사용법 : @클래스풀네임@메소드이름(매개변수)
+		 -->
+		<include refid="search"></include>
+	</select>
+	
+	<select id="getBoardList" resultType="com.study.free.vo.FreeBoardVO" parameterType="com.study.free.vo.FreeBoardSearchVO">
+		<include refid="common.perPage"></include>
+		 SELECT                                                
+		      bo_no       , bo_title  , bo_category            
+		    , bo_writer   , bo_pass   , bo_content             
+		    , bo_hit                                           
+		    , TO_CHAR(bo_reg_date,'YYYY-MM-dd') AS bo_reg_date 
+		    , TO_CHAR(bo_mod_date,'YYYY-MM-dd') AS bo_mod_date 
+		    , bo_del_yn                                        
+		    , b.comm_nm  AS bo_category_nm                     
+		 FROM free_board a, comm_code b                        
+		 WHERE a.bo_category = b.comm_cd                       
+		 AND bo_del_yn = 'N'  
+	 	<include refid="search"></include>
+		 ORDER BY bo_no desc           
+		 <include refid="common.postPage"></include>     
+	</select>
+	
+	<select id="getBoard" resultType="com.study.free.vo.FreeBoardVO" parameterType="int">
+		 SELECT                                                
+		      bo_no       , bo_title  , bo_category            
+		    , bo_writer   , bo_pass   , bo_content             
+		    , bo_hit                                           
+		    , TO_CHAR(bo_reg_date,'YYYY-MM-dd') AS bo_reg_date 
+		    , TO_CHAR(bo_mod_date,'YYYY-MM-dd') AS bo_mod_date 
+		    , bo_del_yn                                        
+		    , b.comm_nm AS bo_category_nm                      
+		 FROM  free_board a, comm_code b                       
+		 WHERE bo_no=#{boNo}                                      
+		 AND a.bo_category = b.comm_cd                       
+	</select>
+	
+	<update id="increaseHit" parameterType="int">
+		UPDATE free_board SET
+		bo_hit = bo_hit+1
+		WHERE bo_no=#{boNo}
+	</update>	
+	
+	<!-- FreeBoardVO #필드명 EL이랑 형식만 비슷하지, 상관없다 -->
+	<!-- ${필드명} 써도 된다 -->
+	<!-- #{필드명}, ${필드명} 차이는 PreparedStatement, Statement 차이 -->
+	<update id="updateBoard" parameterType="com.study.free.vo.FreeBoardVO">
+		UPDATE free_board SET
+		 	 bo_title=#{boTitle}
+			,bo_category=#{boCategory}
+			,bo_content=#{boContent}
+			,bo_mod_date=sysdate
+		WHERE bo_no=#{boNo}
+	</update>
+	
+	<update id="deleteBoard" parameterType="com.study.free.vo.FreeBoardVO">
+		UPDATE free_board SET 
+				bo_del_yn='Y'     
+			WHERE bo_no=#{boNo}     
+	</update>
+	
+	<insert id="insertBoard" parameterType="com.study.free.vo.FreeBoardVO">
+		INSERT INTO free_board (                      
+		     bo_no      , bo_title     , bo_category  
+		   , bo_writer  , bo_pass      , bo_content   
+		   , bo_hit     , bo_reg_date  , bo_mod_date  
+		   , bo_del_yn                                
+		) VALUES (                                    
+		 seq_free_board.nextval, #{boTitle}     ,  #{boCategory}           
+		   ,  #{boWriter}         ,   #{boPass}          ,  #{boContent}           
+		   ,  0         ,  sysdate     , null         
+		   , 'N'                                      
+	    )                                           
+	</insert>
+</mapper>
