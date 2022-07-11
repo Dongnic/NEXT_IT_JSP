@@ -1,0 +1,5 @@
+study4_3
+
+log4j, AOP, intercepter
+
+log4j : test/resources에 있는 log4j.xml 삭제 -> java/resources에 있는 log4j.xml DOCTYPE 수정(블로그에 있음)
