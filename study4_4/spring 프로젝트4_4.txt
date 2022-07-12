@@ -1,0 +1,4 @@
+@ResponseBody 와 Content-type (request, response 관계)
+= @ResponseBody 컨트롤로에서 return값이 jsp를 찾는데 쓰이는게 아니라
+	return 값 그대로 "응답"하게하는 기능
+ajax, id 체크, mail, 댓글, 파일업로드(multipart : req, resp 관계), 엑셀 다운로드

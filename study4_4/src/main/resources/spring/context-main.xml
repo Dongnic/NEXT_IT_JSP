@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- Root Context: defines shared resources visible to all other web components -->
+
+	<!-- ContextLoaderListenr, 프로젝트 전체에서 공유되는 빈들 관리 Buisness, Persistence layer의 
+		빈들을 가지고 있도록 설정 =>@Controller 제외하고 전부입니다. -->
+	<context:component-scan base-package="com.study"
+		use-default-filters="true">
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+
+	<!-- properties파일 읽은 프로퍼티 객체, DB말고도 여러가지 작성할 거라 main에 빈등록 -->
+	<util:properties id="util"
+		location="/WEB-INF/classes/spring/appconfig.properties" />
+
+
+	<!-- ContextLoaderListenr 빈 중 DB관련 빈들 등록 -->
+	<!-- pdf 8페이지 , commons.dbcp대신 commons.dbcp2, name=" driverClassName " 띄어쓰기 
+		주의 -->
+	<bean id="dataSource"
+		class="org.apache.commons.dbcp2.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName"
+			value="#{util['jdbc.driverClassName']}" />
+		<property name="url" value="#{util['jdbc.url']}" />
+		<property name="username" value="#{util['jdbc.username']}" />
+		<property name="password" value="#{util['jdbc.password']}" />
+		<property name="defaultAutoCommit"
+			value="#{util['jdbc.defaultAutoCommit']}" />
+
+
+	</bean>
+	<!-- SqlSession setup for MyBatis Database Layer -->
+	<bean id="sqlSessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation"
+			value="/WEB-INF/classes/mybatis/mybatis-config.xml" />
+		<property name="mapperLocations"
+			value="/WEB-INF/classes/mybatis/mapper/*.xml" />
+	</bean>
+	<mybatis-spring:scan base-package="com.study"
+		annotation="org.apache.ibatis.annotations.Mapper" />
+
+
+
+</beans>
