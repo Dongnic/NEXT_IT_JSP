@@ -3,7 +3,7 @@ package com.study.member.web;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +25,7 @@ import com.study.exception.BizDuplicateKeyException;
 import com.study.exception.BizNotEffectedException;
 import com.study.exception.BizNotFoundException;
 import com.study.member.service.IMemberService;
-import com.study.member.vo.MemberSearchVO;
+import com.study.member.service.MailSendService;
 import com.study.member.vo.MemberVO;
 
 @SessionAttributes("member") // 이 컨트롤러에서만 유지되는 세션
@@ -34,6 +34,9 @@ import com.study.member.vo.MemberVO;
 
 @Controller
 public class MemberJoinController {
+	
+	@Inject
+	MailSendService mailSendService;  //@Service를 붙였었다.
 	
 	@Inject
 	IMemberService memberService;
@@ -82,7 +85,12 @@ public class MemberJoinController {
 		}
 	}
 	
-	
+	@RequestMapping("/join/mailAuth.wow")
+	@ResponseBody
+	public String mailAuth(String mail, HttpServletResponse resp) throws Exception {
+	    String authKey = mailSendService.sendAuthMail(mail); //사용자가 입력한 메일주소로 메일을 보냄
+	    return authKey;
+	}
 	
 	@RequestMapping("/join/step3.wow")
 	public String step3(@ModelAttribute("member") @Validated(value = {Step2.class}) MemberVO member, BindingResult error) {
@@ -93,7 +101,10 @@ public class MemberJoinController {
 		return "join/step3";
 	}
 	
-	
+	@RequestMapping("/join/mailWindow.wow")
+	public String mailWindow() {
+		return "join/mailWindow";
+	}
 	
 	@RequestMapping("/join/regist.wow")
 	public String regist(Model model, @ModelAttribute("member") @Validated(value = {Step3.class}) MemberVO member, BindingResult error, SessionStatus sessionStatus) {
