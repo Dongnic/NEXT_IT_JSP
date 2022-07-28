@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.test.free.dao.IFreeBoardDao">
+
+	<select id="getBoardList" resultType="com.test.free.vo.FreeBoardVO" >
+		SELECT bo_no
+		     , bo_title , bo_category, bo_writer
+		     , bo_pass, bo_content, bo_hit
+		     , to_char(bo_reg_date,'YYYY-MM-DD') AS bo_reg_date
+		     , to_char(bo_mod_date,'YYYY-MM-DD') AS bo_mod_date
+		     , bo_del_yn
+		FROM free_board
+        WHERE bo_del_yn='N'
+		ORDER BY bo_no desc
+	
+	</select>
+
+</mapper>
